@@ -1,3 +1,8 @@
+import unittest
+
+from unittest.mock import MagicMock
+from pyspark.sql import SparkSession
+
 from pandas import CategoricalDtype
 from pandas.api.types import is_numeric_dtype
 from tests.base_test import BaseTest
@@ -59,3 +64,9 @@ class TestDataProcessor(BaseTest):
             data_processor.test_df,
             "Test data should not be None. Check the preprocessing steps."
         )
+        
+    def test_write_to_databricks(self):
+        """
+        Placeholder for testing writing to DB
+        """
+        pass
