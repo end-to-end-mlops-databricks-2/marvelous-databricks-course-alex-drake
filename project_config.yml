@@ -1,11 +1,31 @@
+data: ./data/hotel-reservations.csv
+
+id_column: Booking_ID
+
 num_features:
-  - None
+  - no_of_adults
+  - no_of_children
+  - no_of_weekend_nights
+  - no_of_week_nights
+  - required_car_parking_space
+  - lead_time
+  - arrival_year
+  - arrival_month
+  - arrival_date
+  - repeated_guest
+  - no_of_previous_cancellations
+  - no_of_previous_bookings_not_canceled
+  - avg_price_per_room
+  - no_of_special_requests
+
 
 cat_features:
-  - None
+  - type_of_meal_plan
+  - room_type_reserved
+  - market_segment_type
 
-target: None
+target: booking_status
 
-catalog_name: None
+catalog_name: mlops_dev
 
-schema_name: None
+schema_name: aldrake8

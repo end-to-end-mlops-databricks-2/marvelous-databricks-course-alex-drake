@@ -96,4 +96,8 @@ dmypy.json
 .vscode
 .history
 
+# Databricks configuration
 .databricks
+
+# Data files - may leave some exceptions
+data/*
