@@ -5,3 +5,7 @@ cat_features:
   - None
 
 target: None
+
+catalog_name: None
+
+schema_name: None
