@@ -6,6 +6,8 @@ from pydantic import BaseModel
 class Config(BaseModel):
     """Project Configuration"""
 
+    data: str
+    id_column: str
     num_features: List[str]
     cat_features: List[str]
     target: str
