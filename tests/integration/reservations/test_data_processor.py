@@ -25,22 +25,22 @@ class TestDataProcessor(BaseTest):
             data_processor.df,
             "Imported dataframe should not be None"
             )
-        
+
     def test_preprocessor(self):
         """
         Test that the preprocessor handles the data correctly
         """
         data_processor = DataProcessor(None, config=self.config)
         data_processor.preprocess()
-        
+
         a_num_feature = self.config.num_features[0]
         a_cat_feature = self.config.cat_features[0]
-        
+
         self.assertTrue(
             is_numeric_dtype(data_processor.df[a_num_feature]),
             f"Expected numeric dtype for column {a_num_feature}"
         )
-        
+
         self.assertIsInstance(
             data_processor.df[a_cat_feature].dtype,
             CategoricalDtype,
@@ -64,9 +64,8 @@ class TestDataProcessor(BaseTest):
             data_processor.test_df,
             "Test data should not be None. Check the preprocessing steps."
         )
-        
+
     def test_write_to_databricks(self):
         """
         Placeholder for testing writing to DB
         """
-        pass

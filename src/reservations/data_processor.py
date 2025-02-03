@@ -47,7 +47,6 @@ class DataProcessor:
         cat_features = self.config.cat_features
         encoded_features = []
         for col in cat_features:
-            # self.df[col] = pd.Categorical(self.df[col], ordered=True)
             new_col = col+"_encoded"
             self.df[new_col] = self.df[col].astype("category").cat.codes
             encoded_features.append(new_col)
@@ -84,7 +83,7 @@ class DataProcessor:
             self.df, test_size=test_size, random_state=random_state
             )
 
-    def save_df_to_catalog(self, save_df: pd.DataFrame, table_name: str, 
+    def save_df_to_catalog(self, save_df: pd.DataFrame, table_name: str,
                            spark: SparkSession):
         """Save table to Databricks"""
 

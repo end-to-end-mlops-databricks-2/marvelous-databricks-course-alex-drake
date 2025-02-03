@@ -5,7 +5,7 @@ from src.reservations.config import Config
 
 class TestConfig(TestCase):
     """Test Config
-    
+
     Config is an important part of the project, with
     other functions and modules depending on it
     """
