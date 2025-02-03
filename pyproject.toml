@@ -54,7 +54,8 @@ lint.ignore = [
     "W292", # Ignore No newline at end of file
     "W293", # Ignore Blank line contains whitespace
     "EXE001", # Ignore Executable file with missing shebangs
-    "I001" # Ignore Unsorted imports
+    "I001", # Ignore Unsorted imports
+    "F401" # Ignore Unused imports
 ]
 
 [tool.ruff.format]
