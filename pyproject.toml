@@ -37,16 +37,16 @@ build-backend = "setuptools.build_meta"
 where =["src"]
 include = ["reservations*"]
 
-[tool.ruff]
-line-length = 120
-lint.select = [
+[tool.ruff.lint]
+# line-length = 120
+select = [
     "F",  # pyflakes rules
     "E",  # pycodestyle error rules
     "W",  # pycodestyle warning rules
     "B",  # flake8-bugbear rules
     "I",  # isort rules
 ]
-lint.ignore = [
+ignore = [
     "E501",  # line-too-long
     "E402",  # Ignoring top-level imports
     "F821", # Ignore db-utils import since it is Databricks provided
