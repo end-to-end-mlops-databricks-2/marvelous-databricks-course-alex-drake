@@ -84,7 +84,8 @@ class DataProcessor:
             self.df, test_size=test_size, random_state=random_state
             )
 
-    def save_df_to_catalog(self, save_df: pd.DataFrame, table_name: str, spark: SparkSession):
+    def save_df_to_catalog(self, save_df: pd.DataFrame, table_name: str, 
+                           spark: SparkSession):
         """Save table to Databricks"""
 
         catalog_destination = (
