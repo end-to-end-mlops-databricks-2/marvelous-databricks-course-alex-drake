@@ -45,14 +45,37 @@ class DataProcessor:
 
         # treat the categorical features
         cat_features = self.config.cat_features
+        encoded_features = []
         for col in cat_features:
-            self.df[col] = self.df[col].astype("category")
+            # self.df[col] = pd.Categorical(self.df[col], ordered=True)
+            new_col = col+"_encoded"
+            self.df[new_col] = self.df[col].astype("category").cat.codes
+            encoded_features.append(new_col)
+
+        # additional date features
+        date_features = ['dayofyear', 'arrival_week', 'dayofweek']
+
+        self.df['year'] = self.df['arrival_year']
+        self.df['month'] = self.df['arrival_month']
+        self.df['day'] = self.df['arrival_date']
+
+        self.df['date'] = pd.to_datetime(
+            self.df[['year', 'month', 'day']],
+            errors='coerce'
+        )
+
+        self.df['dayofyear'] = self.df['date'].dt.dayofyear
+        self.df['arrival_week'] = self.df['date'].dt.isocalendar(). \
+            week.astype(float)
+        self.df['dayofweek'] = self.df['date'].dt.dayofweek
 
         # retain the desired features
         id_col = self.config.id_column
         self.df[id_col] = self.df[id_col].astype("str")
 
-        req_columns = [id_col] + num_features + cat_features + [target]
+        req_columns = [id_col] + num_features + cat_features + \
+            encoded_features + date_features + [target]
+
         self.df = self.df[req_columns]
 
     def split_data(self, test_size=0.3, random_state=42):
