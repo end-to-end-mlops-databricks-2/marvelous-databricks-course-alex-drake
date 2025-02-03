@@ -1,7 +1,7 @@
 # Databricks notebook source
 
-from reservations.data_processor import DataProcessor
 from reservations.config import Config
+from reservations.data_processor import DataProcessor
 
 # load configuration
 config = Config.from_yaml(config_path="project_config.yml")
