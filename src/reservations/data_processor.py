@@ -110,16 +110,16 @@ class DataProcessor:
     def save_traing_data_to_catalog(self):
         """Save training data to Databricks"""
 
-        if self.train_df:
+        if self.train_df is not None:
             self.save_df_to_catalog(
                 save_df=self.train_df,
                 table_name='train_set',
-                spark=SparkSession
+                spark=SparkSession.builder.getOrCreate()
                 )
 
-        if self.test_df:
+        if self.test_df is not None:
             self.save_df_to_catalog(
                 save_df=self.test_df,
                 table_name='test_set',
-                spark=SparkSession
+                spark=SparkSession.builder.getOrCreate()
             )
