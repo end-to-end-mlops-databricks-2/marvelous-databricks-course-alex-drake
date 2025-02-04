@@ -1,5 +1,13 @@
 # Databricks notebook source
 
+!pip install /Volumes/mlops_dev/aldrake8/packages/hotel_reservations-latest-py3-none-any.whl
+
+# COMMAND ----------
+
+%restart_python
+
+# COMMAND ----------
+
 from reservations.config import Config
 from reservations.data_processor import DataProcessor
 
