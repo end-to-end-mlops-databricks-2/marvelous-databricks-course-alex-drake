@@ -1,24 +1,26 @@
 [project]
-name = "housing-price"
+name = "hotel-reservations"
 version = "0.0.1"
-description = "Housing prices project"
+description = "Hotel reservation cancellations project"
 requires-python = ">=3.11, <3.12"
-dependencies = ["mlflow==2.17.0",
-                "cffi==1.17.1",
-                "cloudpickle==3.1.0",
-                "matplotlib==3.9.2",
-                "numpy==1.26.4",
-                "pandas==2.2.3",
-                "psutil==6.0.0",
-                "pyarrow==14.0.1",
-                "scikit-learn==1.5.2",
-                "lightgbm==4.5.0",
-                "scipy==1.14.1",
-                "databricks-feature-engineering==0.6",
-                "databricks-feature-lookup==1.2.0",
-                "databricks-sdk==0.32.0",
-                "pydantic==2.9.2"
-                ]
+dependencies = [
+    "mlflow==2.17.0",
+    "cffi==1.17.1",
+    "cloudpickle==3.1.0",
+    "matplotlib==3.9.2",
+    "numpy==1.26.4",
+    "pandas==2.2.3",
+    "psutil==6.0.0",
+    "pyarrow==14.0.1",
+    "scikit-learn==1.5.2",
+    "lightgbm==4.5.0",
+    "scipy==1.14.1",
+    "databricks-feature-engineering==0.6",
+    "databricks-feature-lookup==1.2.0",
+    "databricks-sdk==0.32.0",
+    "pydantic==2.9.2",
+    "pytest>=8.3.4",
+]
 
 [project.optional-dependencies]
 dev = ["databricks-connect>=15.4.1, <16",
@@ -33,10 +35,10 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where =["src"]
-include = ["house_price*"]
+include = ["reservations*"]
 
-[tool.ruff]
-line-length = 120
+[tool.ruff.lint]
+# line-length = 120
 select = [
     "F",  # pyflakes rules
     "E",  # pycodestyle error rules
@@ -46,6 +48,14 @@ select = [
 ]
 ignore = [
     "E501",  # line-too-long
+    "E402",  # Ignoring top-level imports
+    "F821", # Ignore db-utils import since it is Databricks provided
+    "W291", # Ignore Trailing whitespace
+    "W292", # Ignore No newline at end of file
+    "W293", # Ignore Blank line contains whitespace
+    "EXE001", # Ignore Executable file with missing shebangs
+    "I001", # Ignore Unsorted imports
+    "F401" # Ignore Unused imports
 ]
 
 [tool.ruff.format]

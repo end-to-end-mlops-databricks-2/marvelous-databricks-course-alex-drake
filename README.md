@@ -24,3 +24,8 @@ source venv/bin/activate
 uv pip install -r pyproject.toml --all-extras
 uv lock
 ```
+
+# Data
+Using the [**Hotel Reservations Dataset**](https://www.kaggle.com/datasets/ahsan81/hotel-reservations-classification-dataset?resource=download) from Kaggle.
+
+This data can be used to build a classification model to determine whether a booking is likely to be cancelled or not.
