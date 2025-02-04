@@ -1,4 +1,4 @@
-from typing import List
+from typing import Any, Dict, List
 
 import yaml
 from pydantic import BaseModel
@@ -13,6 +13,8 @@ class Config(BaseModel):
     target: str
     catalog_name: str
     schema_name: str
+    experiment_name: str
+    parameters: Dict[str, Any]
 
     @classmethod
     def from_yaml(cls, config_path: str):
