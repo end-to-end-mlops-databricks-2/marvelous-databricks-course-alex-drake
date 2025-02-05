@@ -54,7 +54,7 @@ class CustomLGBModel:
         self.model.fit(X, y)
         return self
 
-class CustomerWrapper(mlflow.pyfunc.PythonModel):
+class CustomWrapper(mlflow.pyfunc.PythonModel):
     """
     Custom wrapper for trained model
 
