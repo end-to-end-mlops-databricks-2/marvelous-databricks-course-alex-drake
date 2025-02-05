@@ -28,6 +28,9 @@ print(f"Train shape: {X_train.shape}")
 # COMMAND ----------
 
 # set experiment
+mlflow.set_tracking_uri('databricks')
+mlflow.set_registry_uri('databricks-uc')
+
 if mlflow.get_experiment(config.experiment_name) is None:
     mlflow.create_experiment(
         name=config.experiment_name,
