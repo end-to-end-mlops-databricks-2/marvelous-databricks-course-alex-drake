@@ -22,23 +22,7 @@ class CustomLGBModel:
         self.schema = f"{config.catalog_name}.{config.schema_name}"
 
         self.params = config.parameters
-        self.experiment_id = self._get_experiment_id()
         self.model = LGBMClassifier(**self.params)
-
-    def _get_experiment_id(self) -> str:
-        """
-        Gets the experiment ID for MLFlow
-        """
-        if mlflow.get_experiment(self.config.experiment_name) is None:
-            mlflow.create_experiment(
-                name=self.config.experiment_name,
-                artifact_location=f"{self.schema}/models"
-            )
-        experiment_id = mlflow.set_experiment(
-            self.config.experiment_name
-            ).experiment_id
-
-        return experiment_id
 
     def train(self, X, y):
         """
