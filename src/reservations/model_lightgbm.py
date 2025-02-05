@@ -3,13 +3,9 @@ LightGBM Model generation and testing for hotel reservation
 cancellation project
 """
 
-import pandas as pd
-
 import mlflow
 import mlflow.lightgbm
 
-from mlflow.models import infer_signature
-from sklearn.metrics import log_loss, roc_auc_score
 from lightgbm import LGBMClassifier
 
 from reservations.config import Config
@@ -53,6 +49,19 @@ class CustomLGBModel:
         """
         self.model.fit(X, y)
         return self
+
+    def predict(self, model_input):
+        """
+        Standard predict
+        """
+        return self.model.predict(model_input)
+
+    def predict_proba(self, model_input):
+        """
+        Predict probabilities
+        """
+        return self.model.predict_proba(model_input)
+
 
 class CustomWrapper(mlflow.pyfunc.PythonModel):
     """
