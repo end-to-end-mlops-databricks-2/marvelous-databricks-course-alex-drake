@@ -4,12 +4,13 @@ import mlflow
 from mlflow.models import infer_signature
 from sklearn.metrics import log_loss, roc_auc_score
 
-from reservations.config import Config
+from reservations.config import Config, Tags
 from reservations.data_loader import DataLoaderUC
-from reservations.models.model_lightgbm import CustomLGBModel, CustomWrapper
+from reservations.models.model_lightgbm import CustomLGBModel
 
 # load configuration
 config = Config.from_yaml(config_path="project_config.yml")
+tags = Tags(**{"git_sha": "abcd1234", "branch": "dev"})
 
 print(f"Configuration contents: {config}")
 
@@ -31,59 +32,29 @@ print(f"Train shape: {X_train.shape}")
 mlflow.set_tracking_uri('databricks')
 mlflow.set_registry_uri('databricks-uc')
 
-if mlflow.get_experiment(config.experiment_name) is None:
-    mlflow.create_experiment(
-        name=config.experiment_name,
-        artifact_location=f"{config.schema_name}/models"
-    )
-experiment_id = mlflow.set_experiment(
-    config.experiment_name
-    ).experiment_id
+# COMMAND ----------
+# initialise model and train
+custom_model = CustomLGBModel(
+    tags=tags, config=config
+)
+
+custom_model.train(X_train, y_train)
 
 # COMMAND ----------
+custom_model.log_model(
+    X_test, y_test,
+    code_paths=["../dist/hotel_reservations-0.0.1-py3-none-any.whl"]
+)
 
-# could use this later for e.g. hyperopt
-params = None
+# COMMAND ----------
+# Get model metadata
+custom_model.retreive_current_run_metadata()
 
-# run experiment
+# COMMAND ----------
+# Register the model
+custom_model.register_model()
 
-with mlflow.start_run(
-    experiment_id=experiment_id,
-    tags={"tag_key":"tag_value"}
-    ) as run:
+# COMMAND ----------
+# Show predictions on test set
 
-    # may come back to later for nested runs / getting best run
-    run_id = run.info.run_id
-
-    if params is None:
-        parameters = config.parameters
-    else:
-        parameters = params
-
-    classifier = CustomLGBModel(**parameters)
-    classifier.train(X_train, y_train)
-
-    y_pred = classifier.predict(X_test)
-    roc_auc = roc_auc_score(y_test, y_pred)
-    ll = log_loss(y_test, y_pred)
-
-    metrics = {
-        "val_roc_auc": roc_auc,
-        "val_log_loss": ll
-    }
-
-    mlflow.log_params(parameters)
-    mlflow.log_metrics(metrics)
-
-    signature = infer_signature(
-        model_input=X_test,
-        model_output=y_pred
-    )
-
-    WrappedModel = CustomWrapper(classifier)
-
-    mlflow.pyfunc.log_model(
-        artifact_path="model",
-        python_model=WrappedModel,
-        signature=signature
-    )
+predictions = custom_model.load_latest_model_and_predict(X_test)
