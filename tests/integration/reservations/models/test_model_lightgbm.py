@@ -15,7 +15,7 @@ class TestCustomLGBModel(BaseTest):
         Test that the class initiatlises with
         a model object
         """
-        classifier = CustomLGBModel(config=self.config)
+        classifier = CustomLGBModel(tags=self.tags, config=self.config)
         self.assertIsNotNone(
             classifier.model,
             "Model cannot be none"
@@ -25,7 +25,7 @@ class TestCustomLGBModel(BaseTest):
             self.config.parameters["learning_rate"],
             "Expected learning parameters to match"
         )
-        
+
     def test_model_training(self):
         """
         Test that the model training function
@@ -40,7 +40,7 @@ class TestCustomLGBModel(BaseTest):
         X = df.drop('target', axis=1)
         y = df['target']
 
-        classifier = CustomLGBModel(config=self.config)
+        classifier = CustomLGBModel(tags=self.tags, config=self.config)
         classifier.train(X, y)
 
         self.assertIsNotNone(
