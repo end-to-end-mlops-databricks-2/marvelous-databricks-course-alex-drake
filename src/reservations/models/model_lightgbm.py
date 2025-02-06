@@ -41,10 +41,14 @@ class CustomLGBModel:
         Checks if experiment exists, then gets
         or creates
         """
-        if mlflow.get_experiment(self.experiment_name) is None:
+        try:
+            mlflow.get_experiment(self.experiment_name)
+        except Exception as e:
+            print(f'Error encountered: {e}')
+            print('Creating a new experiment')
             mlflow.create_experiment(
                 name=self.experiment_name
-            )
+            )            
         mlflow.set_experiment(
             self.experiment_name
         )
