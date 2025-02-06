@@ -2,6 +2,10 @@ create-venv:
 	@echo "Create virtual environment using uv"
 	uv venv -p 3.11 .venv
 
+activate-venv:
+	@echo "Activating virtual environment"
+	source .venv/bin/activate
+
 sync-venv:
 	@echo "Syncing python environment"
 	uv pip install -r pyproject.toml --all-extras --link-mode=copy
