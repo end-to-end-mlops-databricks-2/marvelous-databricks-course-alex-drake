@@ -42,7 +42,7 @@ class CustomLGBModel:
         or creates
         """
         try:
-            mlflow.get_experiment(self.experiment_name)
+            mlflow.get_experiment_by_name(self.experiment_name)
         except Exception as e:
             print(f'Error encountered: {e}')
             print('Creating a new experiment')
@@ -50,7 +50,7 @@ class CustomLGBModel:
                 name=self.experiment_name
             )            
         mlflow.set_experiment(
-            self.experiment_name
+            experiment_name=self.experiment_name
         )
 
     def train(self, X, y):
@@ -161,4 +161,4 @@ class CustomWrapper(mlflow.pyfunc.PythonModel):
         Run predictions on the input data
         """
         predictions = self.model.predict(model_input)
-        return {"Prediction": predictions[0]}
+        return {"Prediction": predictions}
