@@ -2,6 +2,8 @@
 LightGBM Model generation and testing for hotel reservation
 cancellation project
 """
+import pandas as pd
+import numpy as np
 
 import mlflow
 import mlflow.lightgbm
@@ -57,7 +59,7 @@ class CustomWrapper(mlflow.pyfunc.PythonModel):
     def __init__(self, model):
         self.model = model
 
-    def predict(self, context, model_input):
+    def predict(self, context, model_input: pd.DataFrame | np.ndarray):
         """
         Run predictions on the input data
         """

@@ -3,7 +3,7 @@ import pandas as pd
 
 from tests.base_test import BaseTest
 
-from src.reservations.model_lightgbm import CustomLGBModel
+from reservations.models.model_lightgbm import CustomLGBModel
 
 
 class TestCustomLGBModel(BaseTest):

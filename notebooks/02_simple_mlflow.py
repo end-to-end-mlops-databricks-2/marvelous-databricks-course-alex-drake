@@ -6,7 +6,7 @@ from sklearn.metrics import log_loss, roc_auc_score
 
 from reservations.config import Config
 from reservations.data_loader import DataLoaderUC
-from reservations.model_lightgbm import CustomLGBModel, CustomWrapper
+from reservations.models.model_lightgbm import CustomLGBModel, CustomWrapper
 
 # load configuration
 config = Config.from_yaml(config_path="project_config.yml")
