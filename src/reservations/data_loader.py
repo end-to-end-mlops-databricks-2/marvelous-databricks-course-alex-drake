@@ -32,7 +32,7 @@ class DataLoaderUC:
         :return: A pandas.DataFrame
         """
         sparkdf = self.spark.table(f"{self.schema}.{table_name}")
-        return sparkdf.toPandas()
+        return sparkdf.toPandas()[self.config.features]
 
     def _create_lgb_dataset(self, data: pd.DataFrame) -> Dataset:
         """

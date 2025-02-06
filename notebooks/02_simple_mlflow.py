@@ -1,4 +1,12 @@
 # Databricks notebook source
+
+!pip install /Volumes/mlops_dev/aldrake8/packages/hotel_reservations-latest-py3-none-any.whl
+
+# COMMAND ----------
+
+%restart_python
+
+# COMMAND ----------
 import mlflow
 
 from mlflow.models import infer_signature

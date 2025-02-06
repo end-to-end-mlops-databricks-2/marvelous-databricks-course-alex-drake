@@ -12,6 +12,7 @@ class Config(BaseModel):
     num_features: List[str]
     cat_features: List[str]
     target: str
+    features: List[str]
     catalog_name: str
     schema_name: str
     experiment_name: str
