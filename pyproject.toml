@@ -57,8 +57,8 @@ ignore = [
     "I001", # Ignore Unsorted imports
     "F401" # Ignore Unused imports
 ]
-exclude = [
-    ".notebooks"
+extend-exclude = [
+    "notebooks"
 ]
 
 [tool.ruff.format]
