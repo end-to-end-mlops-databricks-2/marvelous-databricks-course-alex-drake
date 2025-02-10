@@ -37,6 +37,11 @@ build-backend = "setuptools.build_meta"
 where =["src"]
 include = ["reservations*"]
 
+[tool.ruff]
+exclude = [
+    "notebooks"
+]
+
 [tool.ruff.lint]
 # line-length = 120
 select = [
@@ -56,9 +61,6 @@ ignore = [
     "EXE001", # Ignore Executable file with missing shebangs
     "I001", # Ignore Unsorted imports
     "F401" # Ignore Unused imports
-]
-extend-exclude = [
-    "notebooks"
 ]
 
 [tool.ruff.format]
