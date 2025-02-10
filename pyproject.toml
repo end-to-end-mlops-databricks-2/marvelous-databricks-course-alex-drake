@@ -58,7 +58,7 @@ ignore = [
     "F401" # Ignore Unused imports
 ]
 exclude = [
-    "notebooks"
+    ".notebooks"
 ]
 
 [tool.ruff.format]
