@@ -57,6 +57,9 @@ ignore = [
     "I001", # Ignore Unsorted imports
     "F401" # Ignore Unused imports
 ]
+exclude = [
+    "notebooks"
+]
 
 [tool.ruff.format]
 indent-style = "space"
