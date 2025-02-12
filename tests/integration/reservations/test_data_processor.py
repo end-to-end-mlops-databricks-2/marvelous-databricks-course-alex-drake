@@ -41,7 +41,7 @@ class TestDataProcessor(BaseTest):
             f"Expected numeric dtype for column {a_num_feature}"
         )
 
-        self.assertIsInstance(
+        self.assertEqual(
             data_processor.df[a_cat_feature].dtype,
             CategoricalDtype,
             f"Expected categorical dtype for column {a_cat_feature}"

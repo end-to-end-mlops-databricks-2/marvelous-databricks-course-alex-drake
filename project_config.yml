@@ -26,6 +26,34 @@ cat_features:
 
 target: booking_status
 
-catalog_name: mlops_dev
+features:
+  - no_of_adults
+  - no_of_children
+  - no_of_weekend_nights
+  - no_of_week_nights
+  - required_car_parking_space
+  - lead_time
+  - arrival_year
+  - arrival_month
+  - arrival_date
+  - repeated_guest
+  - no_of_previous_cancellations
+  - no_of_previous_bookings_not_canceled
+  - avg_price_per_room
+  - no_of_special_requests
+  - type_of_meal_plan_encoded
+  - room_type_reserved_encoded
+  - market_segment_type_encoded
+  - booking_status
 
+catalog_name: mlops_dev
 schema_name: aldrake8
+experiment_name: /Users/aldrake87@gmail.com/hotel_reservations
+
+parameters:
+  learning_rate: 0.01
+  max_depth: 15
+  random_state: 42
+  n_estimators: 250
+  subsample: 0.8
+  colsample_bytree: 0.8

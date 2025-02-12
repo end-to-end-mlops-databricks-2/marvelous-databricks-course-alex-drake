@@ -37,6 +37,11 @@ build-backend = "setuptools.build_meta"
 where =["src"]
 include = ["reservations*"]
 
+[tool.ruff]
+exclude = [
+    "notebooks"
+]
+
 [tool.ruff.lint]
 # line-length = 120
 select = [
