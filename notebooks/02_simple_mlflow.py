@@ -51,7 +51,7 @@ custom_model.train(X_train, y_train)
 # COMMAND ----------
 custom_model.log_model(
     X_test, y_test,
-    code_paths=["../src/reservations/"]
+    code_paths=["/Volumes/mlops_dev/aldrake8/packages/hotel_reservations-latest-py3-none-any.whl"]
 )
 
 # COMMAND ----------
