@@ -49,7 +49,7 @@ model_serving.deploy_or_update_serving_endpoint()
 # Create a sample request body
 required_cols = config.features
 required_cols.remove(config.target)
-print(f"{[col+'\n' for col in required_cols]}")
+print(f"{required_cols}")
 
 # COMMAND ----------
 # sample test data
@@ -69,7 +69,7 @@ def call_endpoint(record: List[Dict]):
     """
     Call the model serving endpoint with a given input
     """
-    serving_uri = f"https://{os.environ["DBR_HOST"]}/serving-endpoints/{endpoint_name}/invocations"
+    serving_uri = f"https://{os.environ['DBR_HOST']}/serving-endpoints/{endpoint_name}/invocations"
     
     response = requests.post(
         serving_uri,
