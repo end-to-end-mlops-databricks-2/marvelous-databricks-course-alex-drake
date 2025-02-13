@@ -80,6 +80,7 @@ def call_endpoint(record: List[Dict]):
     )
     return response.status_code, response.text
 
+# single record response
 status_code, response_text = call_endpoint(dataframe_records[0])
 print(f"Response Status: {status_code}")
 print(f"Response Text: {response_text}")
@@ -89,3 +90,9 @@ print(f"Response Text: {response_text}")
 for i, data in enumerate(dataframe_records):
     call_endpoint(data)
     time.sleep(0.2)
+
+# COMMAND ----------
+# multi-samples call
+status_code, response_text = call_endpoint(sampled_data)
+print(f"Response Status: {status_code}")
+print(f"Response Text: {response_text}")
