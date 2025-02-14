@@ -120,7 +120,10 @@ class FeatureLookUpModel:
             self.train_set["Booking_ID"].cast("string")
         )
 
-    def feature_engineering(self):
+    def create_features(self):
+        """
+        Create features using Feature Lookup
+        """
         self.training_set = self.fe.create_training_set(
             df=self.train_set,
             label=self.target,
