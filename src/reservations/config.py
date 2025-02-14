@@ -16,6 +16,7 @@ class Config(BaseModel):
     catalog_name: str
     schema_name: str
     experiment_name: str
+    experiment_name_fe: str
     endpoint_name: str
     parameters: Dict[str, Any]
 
