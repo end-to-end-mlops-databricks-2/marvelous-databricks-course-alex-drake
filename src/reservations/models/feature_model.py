@@ -195,6 +195,7 @@ class FeatureLookUpModel:
         """
         registered_model = mlflow.register_model(
             model_uri=f"runs:/{self.run_id}/lgb-model-fe",
+            name=f"{self.catalog}.{self.schema}.hotel_res_model_fe",
             tags=self.tags,
         )
 
