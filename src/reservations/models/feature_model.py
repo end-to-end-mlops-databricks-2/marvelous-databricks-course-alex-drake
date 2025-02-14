@@ -33,18 +33,18 @@ class FeatureLookUpModel:
         self.spark = spark
         self.workspace = WorkspaceClient()
         self.fe = feature_engineering.FeatureEngineeringClient()
-        
+
         # get relevant settings from config
         self.features = self.config.features
         self.target = self.config.target
         self.params = self.config.parameters
         self.catalog = self.config.catalog_name
         self.schema = self.config.schema_name
-        
+
         # define table names now for later
         self.feature_table = f"{self.catalog}.{self.schema}.customer_features"
         self.function = f"{self.catalog}.{self.schema}.total_bookings"
-        
+
         # mlflow config
         self.experiment_name = self.config.experiment_name_fe
         self.tags = tags.dict()
@@ -115,7 +115,7 @@ class FeatureLookUpModel:
             f"{self.catalog}.{self.schema}.test_set"
         ).toPandas()
 
-        self.train_Set = self.trian_set.withColumn(
+        self.train_set = self.train_set.withColumn(
             "Booking_ID",
             self.train_set["Booking_ID"].cast("string")
         )
