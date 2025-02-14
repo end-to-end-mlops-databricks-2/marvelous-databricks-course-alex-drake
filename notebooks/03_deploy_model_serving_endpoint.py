@@ -28,7 +28,7 @@ os.environ["DBR_TOKEN"] = dbutils.notebook.entry_point \
 os.environ["DBR_HOST"] = spark.conf.get("spark.databricks.workspaceUrl")
 
 # load project config
-config = Config.from_yaml(config_path="project_config.yml")
+config = Config.from_yaml(config_path="../project_config.yml")
 catalog_name = config.catalog_name
 schema_name = config.schema_name
 model_path = f"{catalog_name}.{schema_name}"

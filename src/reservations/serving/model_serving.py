@@ -35,7 +35,7 @@ class ModelServing:
         ).version
         print(f"Latest model version: {latest_version}")
         return latest_version
-    
+
     def deploy_or_update_serving_endpoint(
         self, version: str = "latest",
         workload_size: str = "Small",
@@ -51,7 +51,10 @@ class ModelServing:
         :param scale_to_zero: bool. If True, endpoint
         will scale to 0 when not in use.
         """
-        endpoint_exists = any(item.name == self.endpoint_name for item in self.workspace._serving_endpoints.list())
+        endpoint_exists = any(
+            item.name == self.endpoint_name for item in self.workspace._serving_endpoints.list()
+            )
+
         if version == "latest":
             entity_version = self.get_latest_model_version()
         else:
