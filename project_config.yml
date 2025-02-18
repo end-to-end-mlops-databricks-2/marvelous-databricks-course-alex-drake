@@ -49,6 +49,8 @@ features:
 catalog_name: mlops_dev
 schema_name: aldrake8
 experiment_name: /Users/aldrake87@gmail.com/hotel_reservations
+experiment_name_fe: /Users/aldrake87@gmail.com/hotel_reservations_fe
+endpoint_name: ad-hotel-cancellation-serving
 
 parameters:
   learning_rate: 0.01
