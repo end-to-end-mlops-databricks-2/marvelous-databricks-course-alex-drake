@@ -20,6 +20,7 @@ class Config(BaseModel):
     endpoint_name: str
     parameters: Dict[str, Any]
     pipeline_id: Optional[str]
+    pacakges: Optional[List[str]]
 
     @classmethod
     def from_yaml(cls, config_path: str, env: str = None):
@@ -32,10 +33,12 @@ class Config(BaseModel):
             config_dict["catalog_name"] = config_dict[env]["catalog_name"]
             config_dict["schema_name"] = config_dict[env]["schema_name"]
             config_dict["pipeline_id"] = config_dict[env]["pipeline_id"]
+            config_dict["data"] = config_dict[env]["data"]
         else:
             config_dict["catalog_name"] = config_dict["catalog_name"]
             config_dict["schema_name"] = config_dict["schema_name"]
             config_dict["pipeline_id"] = config_dict["pipeline_id"]
+            config_dict["data"] = config_dict[env]["data"]
 
         return cls(**config_dict)
 
