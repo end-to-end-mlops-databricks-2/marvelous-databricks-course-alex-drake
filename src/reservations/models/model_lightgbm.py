@@ -124,6 +124,8 @@ class CustomLGBModel:
             alias="latest-model",
             version=latest_version
         )
+        
+        return latest_version
 
     def retreive_current_run_metadata(self):
         """
@@ -144,6 +146,28 @@ class CustomLGBModel:
 
         predictions = model.predict(input_data)
         return predictions
+
+    def model_improved(self, X, y):
+        """
+        Evaluate model performance on the test set
+        """
+        preds_latest = self.load_latest_model_and_predict(X)
+
+        preds_current = self.model.predict(X)
+
+        latest_roc_auc = roc_auc_score(y, preds_latest)
+        latest_ll = log_loss(y, preds_latest)
+        current_roc_auc = roc_auc_score(y, preds_current)
+        current_ll = log_loss(y, preds_current)
+
+        model_status = False
+        if current_roc_auc > latest_roc_auc:
+            print("Challenger performs better. Register the Challenger.")
+            model_status = True
+        else:
+            print("Champion performs better. Keep the Champion.")
+
+        return model_status
 
 
 class CustomWrapper(mlflow.pyfunc.PythonModel):
