@@ -4,6 +4,7 @@ cancellation project
 """
 import pandas as pd
 import numpy as np
+import logging
 
 import mlflow
 import mlflow.lightgbm
@@ -17,6 +18,7 @@ from sklearn.metrics import log_loss, roc_auc_score
 
 from reservations.config import Config, Tags
 
+logger = logging.getLogger(__name__)
 
 class CustomLGBModel:
     """
@@ -44,8 +46,8 @@ class CustomLGBModel:
         try:
             mlflow.get_experiment_by_name(self.experiment_name)
         except Exception as e:
-            print(f'Error encountered: {e}')
-            print('Creating a new experiment')
+            logger.info('Error encountered: %s', e)
+            logger.info('Creating a new experiment')
             mlflow.create_experiment(
                 name=self.experiment_name
             )            
@@ -162,10 +164,10 @@ class CustomLGBModel:
 
         model_status = False
         if current_roc_auc > latest_roc_auc:
-            print("Challenger performs better. Register the Challenger.")
+            logger.info("Challenger performs better. Register the Challenger.")
             model_status = True
         else:
-            print("Champion performs better. Keep the Champion.")
+            logger.info("Champion performs better. Keep the Champion.")
 
         return model_status
 
