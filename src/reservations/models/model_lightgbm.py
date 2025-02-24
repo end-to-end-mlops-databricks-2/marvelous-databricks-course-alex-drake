@@ -158,9 +158,9 @@ class CustomLGBModel:
         preds_current = self.model.predict(X)
 
         latest_roc_auc = roc_auc_score(y, preds_latest)
-        latest_ll = log_loss(y, preds_latest)
+        # latest_ll = log_loss(y, preds_latest)
         current_roc_auc = roc_auc_score(y, preds_current)
-        current_ll = log_loss(y, preds_current)
+        # current_ll = log_loss(y, preds_current)
 
         model_status = False
         if current_roc_auc > latest_roc_auc:
