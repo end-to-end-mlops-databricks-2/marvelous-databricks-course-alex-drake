@@ -1,6 +1,7 @@
 import datetime
 
 import pandas as pd
+import numpy as np
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import current_timestamp, to_utc_timestamp
 from sklearn.model_selection import train_test_split
@@ -123,3 +124,35 @@ class DataProcessor:
                 table_name='test_set',
                 spark=SparkSession.builder.getOrCreate()
             )
+            
+    def make_synthetic_data(self, num_rows=10):
+        """
+        Generates synthetic data based on the input DataFrame
+        """
+        synthetic_data = pd.DataFrame()
+
+        for column in self.df.columns:
+            if column == self.config.id_column:
+                randint = np.random.randint(40000, 99999, num_rows)
+                id_col = [f"INN{i}" for i in randint]
+                synthetic_data[column] = id_col
+
+            if pd.api.types.is_numeric_dtype(self.df[column]):
+                synthetic_data[column] = np.random.randint(
+                    self.df[column].min(),
+                    self.df[column].max(),
+                    num_rows
+                )
+            elif pd.api.types.is_string_dtype(self.df[column]):
+                synthetic_data[column] = np.random.choice(
+                    self.df[column].unique(),
+                    num_rows,
+                    p=self.df[column].value_counts(normalize=True)
+                )
+            else:
+                synthetic_data[column] = np.random.choice(
+                    self.df[column],
+                    num_rows
+                )
+
+        return synthetic_data

@@ -4,6 +4,7 @@ cancellation project
 """
 import pandas as pd
 import numpy as np
+import logging
 
 import mlflow
 import mlflow.lightgbm
@@ -17,6 +18,7 @@ from sklearn.metrics import log_loss, roc_auc_score
 
 from reservations.config import Config, Tags
 
+logger = logging.getLogger(__name__)
 
 class CustomLGBModel:
     """
@@ -44,8 +46,8 @@ class CustomLGBModel:
         try:
             mlflow.get_experiment_by_name(self.experiment_name)
         except Exception as e:
-            print(f'Error encountered: {e}')
-            print('Creating a new experiment')
+            logger.info('Error encountered: %s', e)
+            logger.info('Creating a new experiment')
             mlflow.create_experiment(
                 name=self.experiment_name
             )            
@@ -124,6 +126,8 @@ class CustomLGBModel:
             alias="latest-model",
             version=latest_version
         )
+        
+        return latest_version
 
     def retreive_current_run_metadata(self):
         """
@@ -144,6 +148,28 @@ class CustomLGBModel:
 
         predictions = model.predict(input_data)
         return predictions
+
+    def model_improved(self, X, y):
+        """
+        Evaluate model performance on the test set
+        """
+        preds_latest = self.load_latest_model_and_predict(X)
+
+        preds_current = self.model.predict(X)
+
+        latest_roc_auc = roc_auc_score(y, preds_latest)
+        # latest_ll = log_loss(y, preds_latest)
+        current_roc_auc = roc_auc_score(y, preds_current)
+        # current_ll = log_loss(y, preds_current)
+
+        model_status = False
+        if current_roc_auc > latest_roc_auc:
+            logger.info("Challenger performs better. Register the Challenger.")
+            model_status = True
+        else:
+            logger.info("Champion performs better. Keep the Champion.")
+
+        return model_status
 
 
 class CustomWrapper(mlflow.pyfunc.PythonModel):
