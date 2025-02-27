@@ -23,6 +23,7 @@ def create_or_refresh_monitoring(config, spark, workspace):
     
     request_schema = StructType([
         StructField("dataframe_records", ArrayType(StructType([
+            StructField("Booking_ID", StringType(), True),
             StructField("no_of_adults", IntegerType(), True),
             StructField("no_of_children", IntegerType(), True),
             StructField("no_of_weekend_nights", IntegerType(), True),
@@ -70,6 +71,7 @@ def create_or_refresh_monitoring(config, spark, workspace):
         "timestamp_ms",
         "databricks_request_id",
         "execution_time_ms",
+        F.col("record.Booking_ID").alias("Booking_ID"),
         F.col("record.no_of_adults").alias("no_of_adults"),
         F.col("record.no_of_children").alias("no_of_children"),
         F.col("record.no_of_weekend_nights").alias("no_of_weekend_nights"),
@@ -103,6 +105,41 @@ def create_or_refresh_monitoring(config, spark, workspace):
     inference_set_skewed = spark.table(
         f"{config.catalog_name}.{config.schema_name}.inference_data_skewed"
     )
+
+    df_final_with_status = df_final \
+        .join(test_set.select("Booking_ID","booking_status"),
+              on="Booking_ID", how="left") \
+        .withColumnRenamed("booking_status", "booking_status_test") \
+        .join(inference_set_skewed.select("Booking_ID", "booking_status"),
+              on="Booking_ID", how="left") \
+        .withColumnRenamed("booking_status", "booking_status_inference") \
+        .select(
+            "*",
+            F.coalesce(F.col("booking_status_test"),
+                       F.col("booking_status_inference"))
+            .alias("booking_status")
+        ) \
+        .drop("booking_status_test","booking_status_inference") \
+        .withColumn("booking_status", F.col("booking_status").cast("double")) \
+        .withColumn("prediction", F.col("prediction").cast("double")) \
+        .dropna(subset=["booking_status","prediction"])
+        
+    df_final_with_status.write.format("delta").mode("append") \
+        .saveAsTable(
+            f"{config.catalog_name}.{config.schema_name}.model_monitoring"
+            )
+
+    try:
+        workspace.quality_monitors.get(
+            f"{config.catalog_name}.{config.schema_name}.model_monitoring"
+        )
+        workspace.quality_monitors.run_refresh(
+            table_name=f"{config.catalog_name}.{config.schema_name}.model_monitoring"
+        )
+        logger.info("Refreshing Lakehouse monitoring table")
+    except NotFound:
+        create_monitoring_table(config=config, spark=spark, workspace=workspace)
+        logger.info("Lakehouse monitoring table creation complete.")
 
 
 def create_monitoring_table(config, spark, workspace):
