@@ -124,8 +124,8 @@ class DataProcessor:
                 table_name='test_set',
                 spark=SparkSession.builder.getOrCreate()
             )
-            
-    def make_synthetic_data(self, num_rows=10):
+
+    def make_synthetic_data(self, drift=False, num_rows=10):
         """
         Generates synthetic data based on the input DataFrame
         """
@@ -154,5 +154,19 @@ class DataProcessor:
                     self.df[column],
                     num_rows
                 )
+
+        if drift:
+            skew_features = [
+                "no_of_previous_cancellations",
+                "no_of_previous_bookings_not_canceled"
+                ]
+            for feature in skew_features:
+                synthetic_data[feature] = synthetic_data[feature] * 2
+
+            synthetic_data['arrival_year'] = np.random.randint(
+                self.df['arrival_year'].max()+1,
+                self.df['arrival_year'].max()+3,
+                num_rows
+            )
 
         return synthetic_data
