@@ -19,7 +19,7 @@ class DataProcessor:
     def __init__(self, input_df: pd.DataFrame, config: Config):
         self.config = config
 
-        if input_df:
+        if input_df is not None:
             self.df = input_df
         else:
             self.get_data_from_config()
