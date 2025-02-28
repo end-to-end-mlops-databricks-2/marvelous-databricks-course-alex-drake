@@ -18,7 +18,7 @@ def create_or_refresh_monitoring(config, spark, workspace):
     
     inf_table = spark.sql(
         f"SELECT * FROM {config.catalog_name}."
-        f"{config.schema_name}.`model-serving_payload"
+        f"{config.schema_name}.`model-serving_payload`"
     )
     
     request_schema = StructType([
