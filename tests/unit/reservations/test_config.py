@@ -15,7 +15,8 @@ class TestConfig(TestCase):
         Test config can be opened from YAML
         """
         config = Config.from_yaml(
-            "project_config.yml"
+            "project_config.yml",
+            env="dev"
         )
 
         self.assertEqual(type(config.cat_features), list)

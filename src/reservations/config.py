@@ -20,10 +20,13 @@ class Config(BaseModel):
     endpoint_name: str
     parameters: Dict[str, Any]
     pipeline_id: Optional[str]
-    pacakges: Optional[List[str]]
+    packages: Optional[List[str]]
+    dev: Optional[Dict[str, Any]]
+    acc: Optional[Dict[str, Any]]
+    prd: Optional[Dict[str, Any]]
 
     @classmethod
-    def from_yaml(cls, config_path: str, env: str = None):
+    def from_yaml(cls, config_path: str, env=None):
         """Load config from YAML file"""
 
         with open(config_path, "r") as f:
