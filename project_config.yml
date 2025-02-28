@@ -1,5 +1,5 @@
 dev:
-  data: ./data/hotel-reservations.csv
+  data: /Volumes/mlops_dev/aldrake8/data/hotel-reservations.csv
   catalog_name: mlops_dev
   schema_name: aldrake8
   pipeline_id: aaaa
