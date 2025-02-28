@@ -105,7 +105,7 @@ class CustomLGBModel:
             mlflow.pyfunc.log_model(
                 python_model=CustomWrapper(self.model),
                 artifact_path="pyfunc-hotel-cancellations-model",
-                code_paths=code_paths,
+                # code_paths=code_paths,
                 conda_env=conda_env,
                 signature=signature
             )
