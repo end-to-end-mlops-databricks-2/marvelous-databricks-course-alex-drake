@@ -15,12 +15,12 @@ from databricks.sdk.errors import NotFound
 logger = logging.getLogger(__name__)
 
 def create_or_refresh_monitoring(config, spark, workspace):
-    
+
     inf_table = spark.sql(
         f"SELECT * FROM {config.catalog_name}."
         f"{config.schema_name}.`model-serving_payload`"
     )
-    
+
     request_schema = StructType([
         StructField("dataframe_records", ArrayType(StructType([
             StructField("Booking_ID", StringType(), True),
@@ -95,7 +95,7 @@ def create_or_refresh_monitoring(config, spark, workspace):
             .alias("room_type_reserved_encoded"),
         F.col("record.market_segment_type_encoded")
             .alias("market_segment_type_encoded"),
-        F.col("parsed_response.predictions")[0].alias("prediction"),
+        F.col("parsed_response.predictions.Prediction")[0].alias("prediction"),
         F.lit("hotel_cancellation_model").alias("model_name")
     )
 
