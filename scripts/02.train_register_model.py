@@ -8,6 +8,7 @@ from pyspark.sql import SparkSession
 from reservations.config import Config, Tags
 from reservations.data_loader import DataLoaderUC
 from reservations.models.model_lightgbm import CustomLGBModel
+from reservations.utils import get_package_version
 
 logger = logging.getLogger(__name__)
 
@@ -90,9 +91,13 @@ custom_model = CustomLGBModel(
 custom_model.train(X_train, y_train)
 logger.info("Model training complete")
 
-code_paths = [
-    f"{root_path}/artifacts/.internal/{package}" for package in config.packages
-]
+package_version = get_package_version()
+hotel_package = (
+    f'/Volumes/mlops_dev/aldrake8/packages/hotel_reservations-'
+    f'{package_version}'
+    f'-py3-none-any.whl'
+)
+code_paths = [hotel_package]
 
 custom_model.log_model(
     X_test, y_test,

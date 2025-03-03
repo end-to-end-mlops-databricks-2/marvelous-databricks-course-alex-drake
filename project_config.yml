@@ -2,17 +2,14 @@ dev:
   data: /Volumes/mlops_dev/aldrake8/data/hotel-reservations.csv
   catalog_name: mlops_dev
   schema_name: aldrake8
-  pipeline_id: aaaa
 acc:
   data: /Volumes/mlops_dev/aldrake8/data/hotel-reservations.csv
   catalog_name: mlops_dev
   schema_name: aldrake8
-  pipeline_id: bbbb
 prd:
   data: /Volumes/mlops_dev/aldrake8/data/hotel-reservations.csv
   catalog_name: mlops_dev
   schema_name: aldrake8
-  pipeline_id: bbbb
 
 id_column: Booking_ID
 
@@ -72,6 +69,3 @@ parameters:
   n_estimators: 250
   subsample: 0.8
   colsample_bytree: 0.8
-
-packages:
-  - hotel_reservations-0.0.1-py3-none-any.whl
