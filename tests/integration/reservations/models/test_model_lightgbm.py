@@ -34,6 +34,7 @@ class TestCustomLGBModel(BaseTest):
         data = {
             'feat1': [10,20,30,40],
             'feat2': [5,10,15,20],
+            'Booking_ID': ['a','b','c','d'],
             'target': [0,1,0,1]
         }
         df = pd.DataFrame(data)

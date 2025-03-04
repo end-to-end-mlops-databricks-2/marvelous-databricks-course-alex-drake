@@ -19,11 +19,12 @@ class Config(BaseModel):
     experiment_name_fe: str
     endpoint_name: str
     parameters: Dict[str, Any]
-    pipeline_id: Optional[str]
-    pacakges: Optional[List[str]]
+    dev: Optional[Dict[str, Any]]
+    acc: Optional[Dict[str, Any]]
+    prd: Optional[Dict[str, Any]]
 
     @classmethod
-    def from_yaml(cls, config_path: str, env: str = None):
+    def from_yaml(cls, config_path: str, env=None):
         """Load config from YAML file"""
 
         with open(config_path, "r") as f:
@@ -32,12 +33,10 @@ class Config(BaseModel):
         if env is not None:
             config_dict["catalog_name"] = config_dict[env]["catalog_name"]
             config_dict["schema_name"] = config_dict[env]["schema_name"]
-            config_dict["pipeline_id"] = config_dict[env]["pipeline_id"]
             config_dict["data"] = config_dict[env]["data"]
         else:
             config_dict["catalog_name"] = config_dict["catalog_name"]
             config_dict["schema_name"] = config_dict["schema_name"]
-            config_dict["pipeline_id"] = config_dict["pipeline_id"]
             config_dict["data"] = config_dict[env]["data"]
 
         return cls(**config_dict)

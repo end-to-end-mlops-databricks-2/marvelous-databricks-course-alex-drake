@@ -36,6 +36,8 @@ class CustomLGBModel:
         self.params = config.parameters
         self.model = LGBMClassifier(**self.params)
 
+        self.id_col = self.config.id_column
+
     def _set_experiment(self):
         """
         Set MLFlow experiment
@@ -62,7 +64,7 @@ class CustomLGBModel:
         :param X: a pd.DataFrame of training data
         :param y: a pd.Series of target data
         """
-        self.model.fit(X, y)
+        self.model.fit(X.drop(columns=[self.id_col]), y)
 
     def log_model(self, X, y, code_paths: List[str]):
         """
@@ -77,7 +79,7 @@ class CustomLGBModel:
         with mlflow.start_run(tags=self.tags) as run:
             self.run_id = run.info.run_id
 
-            y_pred = self.model.predict(X)
+            y_pred = self.model.predict(X.drop(columns=[self.id_col]))
             roc_auc = roc_auc_score(y, y_pred)
             ll = log_loss(y, y_pred)
 
@@ -126,7 +128,7 @@ class CustomLGBModel:
             alias="latest-model",
             version=latest_version
         )
-        
+
         return latest_version
 
     def retreive_current_run_metadata(self):
@@ -186,5 +188,6 @@ class CustomWrapper(mlflow.pyfunc.PythonModel):
         """
         Run predictions on the input data
         """
-        predictions = self.model.predict(model_input)
+        features = model_input.drop(columns=["Booking_ID"])
+        predictions = self.model.predict(features)
         return {"Prediction": predictions}

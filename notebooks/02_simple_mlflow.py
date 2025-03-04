@@ -17,7 +17,7 @@ from reservations.data_loader import DataLoaderUC
 from reservations.models.model_lightgbm import CustomLGBModel
 
 # load configuration
-config = Config.from_yaml(config_path="project_config.yml")
+config = Config.from_yaml(config_path="../project_config.yml", env="dev")
 tags = Tags(**{"git_sha": "abcd1234", "branch": "dev"})
 
 print(f"Configuration contents: {config}")

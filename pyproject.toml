@@ -1,6 +1,5 @@
 [project]
 name = "hotel-reservations"
-version = "0.0.1"
 description = "Hotel reservation cancellations project"
 requires-python = ">=3.11, <3.12"
 dependencies = [
@@ -21,6 +20,8 @@ dependencies = [
     "pydantic==2.9.2",
     "pytest>=8.3.4",
 ]
+dynamic = ['version']
+classifiers = ["Private :: Do Not Upload"]
 
 [project.optional-dependencies]
 dev = ["databricks-connect>=15.4.1, <16",
@@ -36,6 +37,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 where =["src"]
 include = ["reservations*"]
+
+[tool.setuptools.dynamic]
+version = { file = "version.txt" }
 
 [tool.ruff]
 exclude = [
